@@ -8,9 +8,10 @@
 
 4. Create [GitHub token](http://workshop.quickstart.awspartner.com/10_prerequisites/30_github_token.html).
 
-5. Configure git in Cloud9 IDE, substituting your GitHub user name and email inside the quotes in the following commands:
+5. In Cloud9 IDE, open a new Terminal window and configure git, substituting your GitHub user name and email inside the quotes in the following commands:
 
     ```
+    cd ~/environment
     git config --global user.name "YOUR_GITHUB_USERNAME" 
     git config --global user.email "YOUR_GITHUB_EMAIL"
     git config --global credential.helper cache
@@ -25,7 +26,10 @@
 
 7. Download workshop assets. This will be located at the Root level of the project together with the quickstart-autodesk-forge folder.
 
-    `curl -O https://aws-cfn-samples.s3.amazonaws.com/forge-workshop/forge-workshop-assets.zip`
+    ```
+    cd ~/environment
+    curl -O https://aws-cfn-samples.s3.amazonaws.com/forge-workshop/forge-workshop-assets.zip
+    ```
 
 8. Unzip workshop assets  
 
@@ -40,17 +44,18 @@ CloudFormation templates and scripts. We also create a `forge-demo` key pair in 
     Sample output (you will get different values for the ID's):
 
     ```
-    make_bucket: au-demo-config-ab77e26d-758c
-    Created config bucket: au-demo-config-ab77e26d-758c
-    make_bucket: au-demo-code-ab77e26d-758c
-    Created code hosting bucket: au-demo-code-ab77e26d-758c
+    make_bucket: au-demo-config-5ac3c715-5857
+    Created config bucket: au-demo-config-5ac3c715-5857
+    make_bucket: au-demo-code-5ac3c715-5857
+    Created code hosting bucket: au-demo-code-5ac3c715-5857
+    Created forge-demo key pair in us-west-1 and us-west-2
     ```
 
 10. The names of the created buckets are saved to file system for future reference. We'll need them again in [Section 3](#setting-up-continuous-deployment), Step 3. Export the config bucket to an environment variable for convenience  
 
     `export CONFIG_BUCKET=$(cat config-bucket.txt)`
 
-11. Open update_params.sh and fill lines 1-4 as follows. 
+11. Open update_artifacts.sh and fill lines 1-4 as follows. 
    
     Property | Value
     ---------|------
@@ -92,7 +97,7 @@ CloudFormation templates and scripts. We also create a `forge-demo` key pair in 
     aws s3 cp quickstart-autodesk-forge.zip s3://$CONFIG_BUCKET/
     aws s3 cp taskcat_project_override.json s3://$CONFIG_BUCKET/
     ```
-18. In a new tab, open the following [launch stack link](https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?stackName=Forge-App-CICD&templateURL=https://aws-cfn-samples.s3.amazonaws.com/quickstart-taskcat-ci/templates/taskcat-cicd-pipeline.template.yaml&param_ProdStackName=Forge-Prod-Stack&param_ProdStackConfig=forge-prod-us-west-2.json&param_TemplateFileName=autodesk-forge-master.json&param_TestStackConfig=taskcat_project_override.json&param_SourceRepoBranch=develop&param_ReleaseBranch=master&param_QSS3KeyPrefix=quickstart-taskcat-ci/&param_QSS3BucketName=aws-cfn-samples&param_GitHubRepoName=quickstart-autodesk-forge&param_KeepTestStack=True) that will setup your CodePipeline. Most fields are populated with defaults, fill in only the blank fields.
+18. In a new tab, open the following [launch stack link](https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?stackName=Forge-App-CICD&templateURL=https://aws-cfn-samples.s3.amazonaws.com/quickstart-taskcat-ci/templates/taskcat-cicd-pipeline.template.yaml&param_ProdStackName=Forge-Prod-Stack&param_ProdStackConfig=forge-prod-codepipeline.json&param_TemplateFileName=autodesk-forge-master.json&param_TestStackConfig=taskcat_project_override.json&param_SourceRepoBranch=develop&param_ReleaseBranch=master&param_QSS3KeyPrefix=quickstart-taskcat-ci/&param_QSS3BucketName=aws-cfn-samples&param_GitHubRepoName=quickstart-autodesk-forge&param_KeepTestStack=True) that will setup your CodePipeline. Most fields are populated with defaults, fill in only the blank fields.
 
     * Repository owner: your GitHub user name
     * OAuth2 token: your GitHub oauth token created in Step 4
