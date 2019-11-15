@@ -94,6 +94,7 @@ CloudFormation templates and scripts. We also create a `forge-demo` key pair in 
 
 17. Let's upload the `quickstart-autodesk-forge.zip` and the test config file  `taskcat_project_override.json` to config bucket  
     ```
+    cd ~/environment
     aws s3 cp quickstart-autodesk-forge.zip s3://$CONFIG_BUCKET/
     aws s3 cp taskcat_project_override.json s3://$CONFIG_BUCKET/
     ```
